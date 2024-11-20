@@ -1,0 +1,33 @@
+.form-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-column {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.example-form-field {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.product-details {
+  display: flex;
+  align-items: center;
+}
+
+.floreria{
+  width: 220px;
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.floreriaF{
+  width: 110px;
+  margin-right: 5px;
+  margin-left: 5px;
+}

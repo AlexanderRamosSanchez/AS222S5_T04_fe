@@ -1,0 +1,103 @@
+<h2 style="margin-top: 7px; padding-left: 35px; font-size: 30px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;"
+  mat-dialog-title>{{ data ? 'Actualizar Producto' : 'Nuevo Producto'}}
+</h2>
+
+<div mat-dialog-content class="FormularioProducto">
+  <form [formGroup]="productForm">
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="example-form-field full-width" style= "margin-bottom: 10px;">
+        <mat-label>Tipo de Producto :</mat-label>
+        <mat-select formControlName="series">
+          <mat-option value="Flor">Flor</mat-option>
+          <mat-option value="Rosas">Rosas</mat-option>
+          <mat-option value="Planta">Planta</mat-option>
+        </mat-select>
+        <mat-error *ngIf="productForm.get('series')?.errors?.['required']">
+          Complete este campo por favor
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="example-form-field full-width" style= "margin-bottom: 10px;">
+        <mat-label>Nombre del Producto</mat-label>
+        <input matInput placeholder="Nombre del producto" formControlName="names">
+        <mat-error *ngIf="productForm.get('names')?.errors?.['required']">
+          Complete este campo por favor
+        </mat-error>
+        <mat-error *ngIf="productForm.get('names')?.errors?.['onlyLetters']">
+          Solo se permite letras en este campo
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="example-form-field full-width" style= "margin-bottom: 10px;">
+        <mat-label>Descripción del Producto :</mat-label>
+        <input matInput placeholder="Descripción del producto" formControlName="description">
+        <mat-error *ngIf="productForm.get('description')?.errors?.['required']">
+          Complete este campo por favor
+        </mat-error>
+        <mat-error *ngIf="productForm.get('description')?.errors?.['onlyLetters']">
+          Solo se permite letras en este campo
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="example-form-field full-width" style= "margin-bottom: 10px;">
+        <mat-label>Categoria del Producto :</mat-label>
+        <input matInput placeholder="Categoria del producto" formControlName="category">
+        <mat-error *ngIf="productForm.get('category')?.errors?.['required']">
+          Complete este campo por favor
+        </mat-error>
+        <mat-error *ngIf="productForm.get('category')?.errors?.['onlyLetters']">
+          Solo se permite letras en este campo
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="example-form-field">
+        <mat-label>Fecha de nacimiento</mat-label>
+        <input matInput [matDatepicker]="picker" placeholder="Selecciona una fecha" formControlName="purchaseDate"
+          color="warn">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="productForm.get('purchaseDate')?.errors?.['required']">
+          Completa este campo por favor
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="example-form-field full-width" style= "margin-bottom: 10px;">
+        <mat-label>Precio del Producto</mat-label>
+        <input matInput type="text" placeholder="000" formControlName="price">
+        <mat-error *ngIf="productForm.get('price')?.errors?.['required']">
+          Complete este campo por favor
+        </mat-error>
+        <mat-error *ngIf="productForm.get('price')?.errors?.['pattern']">
+          Solo se permiten números y decimales
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline" class="example-form-field full-width" style= "margin-bottom: 10px;">
+        <mat-label>Stock del Producto</mat-label>
+        <input matInput type="number" placeholder="000" formControlName="stock">
+        <mat-error *ngIf="productForm.get('stock')?.errors?.['required']">
+          Complete este campo por favor
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+
+<mat-dialog-actions style="padding-left: 35px; margin-bottom: 10px;">
+  <button mat-raised-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="saveProduct()">
+    {{ data ? 'Actualizar' : 'Registrar'}}
+  </button>
+</mat-dialog-actions>

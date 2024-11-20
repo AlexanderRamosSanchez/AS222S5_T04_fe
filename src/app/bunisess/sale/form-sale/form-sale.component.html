@@ -1,0 +1,94 @@
+<h2 style="margin-top: 7px; padding-left: 25px; font-size: 30px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" mat-dialog-title>
+  {{ data ? 'Actualizar Venta' : 'Nueva Venta' }}
+</h2>
+
+<div mat-dialog-content class="FormularioVenta">
+  <form [formGroup]="saleForm">
+    <div class="form-row">
+      <div class="form-column">
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Nombre del Cliente</mat-label>
+          <mat-select formControlName="clientId" id="clientId">
+            <mat-option *ngFor="let person of personas" [value]="person.id">{{person.names}} {{person.lastNames}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="saleForm.get('clientId')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Tipo de Venta</mat-label>
+          <mat-select formControlName="salesType" id="salesType">
+            <mat-option value="Fisica">Física</mat-option>
+            <mat-option value="Online">Online</mat-option>
+          </mat-select>
+          <mat-error *ngIf="saleForm.get('salesType')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Nombre del Vendedor</mat-label>
+          <mat-select formControlName="sellerId" id="sellerId">
+            <mat-option *ngFor="let person of vendedores" [value]="person.id">{{person.names}} {{person.lastNames}}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="saleForm.get('sellerId')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="example-form-field">
+          <mat-label>Método de Pago</mat-label>
+          <mat-select formControlName="payment" id="payment">
+            <mat-option value="Efectivo">Efectivo</mat-option>
+            <mat-option value="Tarjeta">Tarjeta</mat-option>
+          </mat-select>
+          <mat-error *ngIf="saleForm.get('payment')?.errors?.['required']">
+            Complete este campo por favor
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div formArrayName="saleDetails">
+      <h2 style="margin-top: 20px; padding-left: 10px; font-size: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+        Detalles de la Venta
+      </h2>
+      <div *ngFor="let detail of saleDetails.controls; let i = index" [formGroupName]="i" class="form-row detail-row">
+        <div class="form-column product-details">
+          <mat-form-field appearance="outline" class="example-form-field floreria">
+            <mat-label>Nombre del Producto</mat-label>
+            <mat-select formControlName="productId" [id]="'productId-' + i" (selectionChange)="updatePrice(i)">
+              <mat-option *ngFor="let product of productos" [value]="product.id">{{product.names}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline" class="example-form-field floreria">
+            <mat-label>Cantidad</mat-label>
+            <input matInput placeholder="Cantidad" formControlName="amount" type="number" [id]="'amount-' + i" (input)="updatePrice(i)">
+            <mat-error *ngIf="detail.get('amount')?.errors?.['required']">
+              Campo obligatorio
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline" class="example-form-field floreriaF">
+            <mat-label>Precio</mat-label>
+            <input matInput placeholder="Precio" [value]="getPrice(i)" readonly>
+          </mat-form-field>
+      
+          <button mat-icon-button color="warn" (click)="removeSaleDetail(i)" style="margin-bottom: 10px;">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+      <button mat-raised-button (click)="addSaleDetail()" style="margin-left: 10px; margin-top: 7px;">Añadir Producto</button>      
+    </div>
+  </form>
+</div>
+
+<mat-dialog-actions style="display: flex; justify-content: center; margin-bottom: 10px;">
+  <button mat-raised-button (click)="cancelar()">Cancelar</button>
+  <button mat-raised-button color="primary" (click)="saveSale()">
+    {{ data ? 'Actualizar' : 'Registrar' }}
+  </button>
+</mat-dialog-actions>

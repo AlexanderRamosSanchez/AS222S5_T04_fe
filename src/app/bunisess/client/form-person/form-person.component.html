@@ -1,0 +1,20 @@
+<div class="chatbot">
+  <div class="chatbot-header">
+    <h3>ChatBot</h3>
+    <p>¡Estoy aquí para ayudarte!</p>
+  </div>
+  <div class="chatbot-messages" #messageContainer>
+    <div *ngFor="let message of messages" [ngClass]="{'user-message': message.sender === 'user', 'bot-message': message.sender === 'bot'}">
+      <div class="message-content">
+        <i *ngIf="message.sender === 'user'" class="fas fa-user"></i>
+        <i *ngIf="message.sender === 'bot'" class="fas fa-robot"></i>
+        <span>{{ message.text }}</span>
+        <span *ngIf="message.isTyping" class="typing-indicator">Escribiendo...</span>
+      </div>
+    </div>
+  </div>
+  <div class="chatbot-input">
+    <input [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Escribe un mensaje..." />
+    <button (click)="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
