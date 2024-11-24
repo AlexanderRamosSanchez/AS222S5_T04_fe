@@ -8,6 +8,8 @@ COPY package*.json /app
 
 RUN npm install
 
+RUN npx tailwindcss init
+
 COPY . /app
 
 RUN npm run build --prod

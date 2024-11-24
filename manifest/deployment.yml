@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ms-chat-deployment
+  namespace: diego
+  labels:
+    app: ms-chat
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ms-chat
+  template:
+    metadata:
+      labels:
+        app: ms-chat
+    spec:
+      containers:
+        - name: ms-chat
+          image: diegoramos678/ms-chat:latest
+          ports:
+            - containerPort: 4200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ms-chat-service
+  namespace: diego
+spec:
+  type: NodePort
+  ports:
+    - port: 4200
+      targetPort: 4200
+      nodePort: 30000
+  selector:
+    app: ms-chat
