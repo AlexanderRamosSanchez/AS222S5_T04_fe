@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  app:
+    image: diegoramos678/vg-web-chat:latest
+    ports:
+      - "4200:4200"
+    environment:
+      API_BACKEND : 'https://miniature-waffle-ggq54jvgpq5fv7j4-8080.app.github.dev'

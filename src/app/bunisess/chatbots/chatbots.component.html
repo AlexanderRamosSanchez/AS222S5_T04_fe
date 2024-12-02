@@ -1,0 +1,46 @@
+<div class="chatbot">
+  <div class="chatbot-header">
+    <h3>ChatBot</h3>
+    <p>¡Estoy aquí para ayudarte!</p>
+    <button (click)="toggleArchived()" class="archive-button">
+      <i class="fas fa-archive"></i> <!-- Ícono de archivador -->
+    </button>
+  </div>
+  
+  <!-- Contenedor de los mensajes -->
+  <div class="chatbot-messages" #messageContainer>
+    <div *ngFor="let message of messages; let i = index">
+      
+      <!-- Mensaje del usuario -->
+      <div class="user-message" *ngIf="message.query">
+        <div class="message-content">
+          <i class="fas fa-user"></i>
+          <span>{{ message.query }}</span>
+        </div>
+        <button (click)="editMessage(i)" class="edit-button" *ngIf="!showArchived">
+          <i class="fas fa-edit"></i> <!-- Ícono de editar -->
+        </button>
+        <button (click)="eliminarChat(message.id)" class="delete-button" *ngIf="!showArchived">
+          <i class="fas fa-trash"></i> <!-- Ícono de eliminar -->
+        </button>
+        <button (click)="activateMessage(message.id)" *ngIf="showArchived">
+          <i class="fas fa-check"></i> Activar
+        </button>
+      </div>
+  
+      <!-- Mensaje del bot -->
+      <div class="bot-message" *ngIf="message.response">
+        <div class="message-content">
+          <i class="fas fa-robot"></i>
+          <span>{{ message.response }}</span>
+        </div>
+      </div>
+    </div>
+  </div>  
+  
+  <!-- Campo de entrada para nuevos mensajes -->
+  <div class="chatbot-input" style="margin-top: 20px;">
+    <input [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Escribe un mensaje..." />
+    <button (click)="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+  </div>
+</div>
